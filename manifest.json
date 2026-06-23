@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Grounding",
-  "version": "0.1.0"
-  "description": "Gates distracting sites behind a typing challenge."
+  "version": "0.1.0",
+  "description": "Gates distracting sites behind a typing challenge.",
   "content_scripts": [
     {
       "matches": [
@@ -12,12 +12,8 @@
         "*//*.x.com",
         "*//*.tiktok.com"
       ],
-      "js": [
-        "content.js"
-      ],
-      "css": [
-        "content.css"
-      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
       "run_at": "document_start"
     }
   ]
