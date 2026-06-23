@@ -1,18 +1,25 @@
-#grounding-overlay {
+/* ── Grounding overlay ── */
 
+#grounding-overlay {
+    /* Fill the entire viewport, above everything */
     position: fixed;
     inset: 0;
-    z-index: 2147483647;
+    z-index: 2147483647; /* max z-index */
 
+    /* Monkeytype-inspired dark background */
     background-color: #323437;
 
+    /* Blur whatever is behind the overlay */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 
-    pointer-events: all:
+    /* Prevent any interaction with the page beneath */
+    pointer-events: all;
 
+    /* Lock scrolling */
     overflow: hidden;
 
+    /* Center the content */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,18 +27,23 @@
     gap: 8px;
 }
 
+/* Kill scrolling on the page itself too */
 html:has(#grounding-overlay),
 body:has(#grounding-overlay) {
-    overflow: hidden;
+    overflow: hidden !important;
+}
+
+.char {
+    color: #646669;
 }
 
 #grounding-quote {
     max-width: 600px;
     text-align: center;
-    font-family: 'Courier New', monospace;
+    font-family: "Courier New", monospace;
     font-size: 26px;
     font-weight: 400;
     line-height: 1.6;
     color: #646669;
-    user-select:none;
+    user-select: none;
 }
