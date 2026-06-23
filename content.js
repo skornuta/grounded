@@ -14,7 +14,8 @@
     "Put it down. The internet will still be here later.",
   ];
 
-  const quote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+  var idx = Math.floor(Math.random() * QUOTES.length);
+  var quote = QUOTES[idx];
 
   const overlay = document.createElement("div");
   overlay.id = "grounding-overlay";
@@ -22,11 +23,12 @@
   const quoteContainer = document.createElement("div");
   quoteContainer.id = "grounding-quote";
 
-  for (var i = 0; i < quote.length; i++) [
-    var char = quote[i];
-    var span = document.createElement('span');
-    span.className = 'char';
-    span.textContent = char === ' ' ? '\u00a0' : char;
+  var i, letter, span;
+  for (i = 0; i < quote.length; i++) {
+    letter = quote[i];
+    span = document.createElement("span");
+    span.className = "char";
+    span.textContent = letter === " " ? "\u00a0" : letter;
     quoteContainer.appendChild(span);
   }
 
