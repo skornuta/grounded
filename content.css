@@ -25,21 +25,13 @@ body:has(#grounding-overlay) {
     overflow: hidden;
 }
 
-#grounding-label {
-    margin: 0;
-    font-family: 'Roboto Mono', 'Courier New', monospace;
-      font-size: 2rem;
-      font-weight: 400;
-      letter-spacing: 0.15em;
-      color: #d1d0c5; /* Monkeytype's default text colour */
-      user-select: none;
-    }
-
-#grounding-sub {
-    margin: 0;
-    font-family: 'Roboto Mono', 'Courier New', monospace;
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
-    color: #646669; /* Monkeytype's dim/sub colour */
-    user-select: none;
+#grounding-quote {
+    max-width: 600px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #646669;
+    user-select:none;
 }

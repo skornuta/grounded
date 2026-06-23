@@ -4,17 +4,11 @@
   const overlay = document.createElement("div");
   overlay.id = "grounding-overlay";
 
-  const label = document.createElement("p");
-  label.id = "grounding-label";
-  label.textContent = "grounding";
+  const quoteContainer = document.createElement("div");
+  quoteContainer.id = "grounding-quote";
+  quoteContainer.textContent = "Look up at the sky. It's beautiful out there.";
 
-  const sub = document.createElement("p");
-  sub.id = "grounding-sub";
-  sub.textContent =
-    "A poem typing challenge coming soon. Be ready for your social media addiction to go away.";
-
-  overlay.appendChild(label);
-  overlay.appendChild(sub);
+  overlay.appendChild(quoteContainer);
 
   document.documentElement.appendChild(overlay);
 })();
