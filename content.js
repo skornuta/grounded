@@ -22,8 +22,9 @@
   const quoteContainer = document.createElement("div");
   quoteContainer.id = "grounding-quote";
 
-  for (const char of quote) [
-    const span = document.createElement('span');
+  for (var i = 0; i < quote.length; i++) [
+    var char = quote[i];
+    var span = document.createElement('span');
     span.className = 'char';
     span.textContent = char === ' ' ? '\u00a0' : char;
     quoteContainer.appendChild(span);
