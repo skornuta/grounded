@@ -10,7 +10,9 @@
         "*://*.reddit.com/*",
         "*://*.instagram.com/*",
         "*://*.x.com/*",
-        "*://*.tiktok.com/*"
+        "*://*.tiktok.com/*",
+        "*://*.snapchat.com/*",
+        "*://*.facebook.com/*"
       ],
       "js": ["content.js"],
       "css": ["content.css"],
