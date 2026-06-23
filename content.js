@@ -10,7 +10,8 @@
 
   const sub = document.createElement("p");
   sub.id = "grounding-sub";
-  sub.textContent = "typing challenge coming soon";
+  sub.textContent =
+    "A poem typing challenge coming soon. Be ready for your social media addiction to go away.";
 
   overlay.appendChild(label);
   overlay.appendChild(sub);
