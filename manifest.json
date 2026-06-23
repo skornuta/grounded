@@ -6,11 +6,11 @@
   "content_scripts": [
     {
       "matches": [
-        "*//*.youtube.com",
-        "*//*.reddit.com",
-        "*//*.instagram.com",
-        "*//*.x.com",
-        "*//*.tiktok.com"
+        "*://*.youtube.com/*",
+        "*://*.reddit.com/*",
+        "*://*.instagram.com/*",
+        "*://*.x.com/*",
+        "*://*.tiktok.com/*"
       ],
       "js": ["content.js"],
       "css": ["content.css"],
