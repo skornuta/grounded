@@ -40,15 +40,29 @@
 
   spans[currentIndex].classList.add("caret");
 
-  window.addEventListener("keydown", function (e) {
+  function unlock() {
+    window.removeEventListener("keydown", onKeyDown);
+    overlay.classList.add("fade-out");
+
+    setTimeout(function () {
+      overlay.remove();
+    }, 500);
+  }
+
+  function isComplete() {
+    if (currentIndex < spans.length) return false;
+
+    var errors = quoteContainer.querySelectorAll(".incorrect");
+    return errors.length === 0;
+  }
+
+  function onKeyDown(e) {
     if (e.key === "Backspace") {
       if (currentIndex === 0) return;
-
       spans[currentIndex].classList.remove("caret");
 
       currentIndex--;
       spans[currentIndex].classList.remove("correct", "incorrect");
-
       spans[currentIndex].classList.add("caret");
       return;
     }
@@ -67,5 +81,11 @@
     if (currentIndex < spans.length) {
       spans[currentIndex].classList.add("caret");
     }
-  });
+
+    if (isComplete()) {
+      unlock();
+    }
+  }
+
+  window.addEventListener("keydown", onKeyDown);
 })();
