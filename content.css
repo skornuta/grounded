@@ -1,25 +1,12 @@
-/* ── Grounding overlay ── */
-
 #grounding-overlay {
-    /* Fill the entire viewport, above everything */
     position: fixed;
     inset: 0;
-    z-index: 2147483647; /* max z-index */
-
-    /* Monkeytype-inspired dark background */
+    z-index: 2147483647;
     background-color: #323437;
-
-    /* Blur whatever is behind the overlay */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-
-    /* Prevent any interaction with the page beneath */
     pointer-events: all;
-
-    /* Lock scrolling */
     overflow: hidden;
-
-    /* Center the content */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,9 +26,8 @@
     pointer-events: none;
 }
 
-/* Kill scrolling on the page itself too */
-html:has(#grounding-overlay),
-body:has(#grounding-overlay) {
+html:has(#grounding-overlay):not(:has(.fade-out)),
+body:has(#grounding-overlay):not(:has(.fade-out)) {
     overflow: hidden !important;
 }
 
@@ -49,12 +35,14 @@ body:has(#grounding-overlay) {
     max-width: 600px;
     text-align: center;
     font-family: "Courier New", monospace;
-    font-size: 26px;
-    font-weight: 400;
-    line-height: 1.6;
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 1.7;
     color: #646669;
     user-select: none;
 }
+
+/* ── Character states ── */
 
 @keyframes grounding-blink {
     0%,
@@ -65,6 +53,7 @@ body:has(#grounding-overlay) {
         opacity: 0;
     }
 }
+
 .char {
     position: relative;
     color: #646669;

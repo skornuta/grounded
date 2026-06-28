@@ -1,7 +1,7 @@
 (function () {
   if (document.getElementById("grounding-overlay")) return;
 
-  const QUOTES = [
+  var QUOTES = [
     "Look up at the sky. It's beautiful out there.",
     "Step outside. The fresh air is waiting for you.",
     "The trees don't care about your notifications.",
@@ -14,36 +14,49 @@
     "Put it down. The internet will still be here later.",
   ];
 
-  var idx = Math.floor(Math.random() * QUOTES.length);
-  var quote = QUOTES[idx];
-
-  const overlay = document.createElement("div");
+  var overlay = document.createElement("div");
   overlay.id = "grounding-overlay";
 
-  const quoteContainer = document.createElement("div");
+  var quoteContainer = document.createElement("div");
   quoteContainer.id = "grounding-quote";
-
-  var i, letter, span;
-  for (i = 0; i < quote.length; i++) {
-    letter = quote[i];
-    span = document.createElement("span");
-    span.className = "char";
-    span.textContent = letter === " " ? "\u00a0" : letter;
-    quoteContainer.appendChild(span);
-  }
 
   overlay.appendChild(quoteContainer);
   document.documentElement.appendChild(overlay);
 
-  var spans = quoteContainer.querySelectorAll(".char");
+  var spans = [];
   var currentIndex = 0;
+  var lastQuoteIdx = -1;
+  var quote = "";
 
-  spans[currentIndex].classList.add("caret");
+  function loadQuote() {
+    var next = lastQuoteIdx;
+    while (next === lastQuoteIdx) {
+      next = Math.floor(Math.random() * QUOTES.length);
+    }
+    lastQuoteIdx = next;
+    quote = QUOTES[next];
+    currentIndex = 0;
+
+    while (quoteContainer.firstChild) {
+      quoteContainer.removeChild(quoteContainer.firstChild);
+    }
+
+    var i, letter, span;
+    for (i = 0; i < quote.length; i++) {
+      letter = quote[i];
+      span = document.createElement("span");
+      span.className = "char";
+      span.textContent = letter === " " ? "\u00A0" : letter;
+      quoteContainer.appendChild(span);
+    }
+
+    spans = quoteContainer.getElementsByClassName("char");
+    spans[0].classList.add("caret");
+  }
 
   function unlock() {
     window.removeEventListener("keydown", onKeyDown);
     overlay.classList.add("fade-out");
-
     setTimeout(function () {
       overlay.remove();
     }, 500);
@@ -51,16 +64,20 @@
 
   function isComplete() {
     if (currentIndex < spans.length) return false;
-
-    var errors = quoteContainer.querySelectorAll(".incorrect");
-    return errors.length === 0;
+    return quoteContainer.getElementsByClassName("incorrect").length === 0;
   }
 
   function onKeyDown(e) {
+    if (e.key === "Escape") {
+      loadQuote();
+      return;
+    }
+
     if (e.key === "Backspace") {
       if (currentIndex === 0) return;
-      spans[currentIndex].classList.remove("caret");
-
+      if (currentIndex < spans.length) {
+        spans[currentIndex].classList.remove("caret");
+      }
       currentIndex--;
       spans[currentIndex].classList.remove("correct", "incorrect");
       spans[currentIndex].classList.add("caret");
@@ -88,4 +105,5 @@
   }
 
   window.addEventListener("keydown", onKeyDown);
+  loadQuote();
 })();
