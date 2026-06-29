@@ -52,6 +52,10 @@
 
     spans = quoteContainer.getElementsByClassName("char");
     spans[0].classList.add("caret");
+
+    quoteContainer.classList.remove("loading");
+    void quoteContainer.offsetWidth;
+    quoteContainer.classList.add("loading");
   }
 
   function unlock() {
@@ -64,10 +68,14 @@
 
   function isComplete() {
     if (currentIndex < spans.length) return false;
-    return quoteContainer.getElementsByClassName("incorrect").length === 0;
+    for (var i = 0; i < spans.length; i++) {
+      if (spans[i].classList.contains("incorrect")) return false;
+    }
+    return true;
   }
 
   function onKeyDown(e) {
+    if (e.ctrlKey || e.metaKey) return;
     if (e.key === "Escape") {
       loadQuote();
       return;

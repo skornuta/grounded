@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Grounding",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "description": "A quick and simple extension to try to gate distracting sites behind a calm, distraction-free typing challenge.",
   "content_scripts": [
     {
