@@ -12,6 +12,11 @@
     "Even five minutes outside will change how you feel.",
     "Nature has no loading screens. Go explore it.",
     "Put it down. The internet will still be here later.",
+
+    // testing some multi lane poems
+    "I am not afraid of the storms, \nfor I am learning how to sail my ship.",
+    "In the middle of difficulty,\nlies opportunity.",
+    "The cure for anything\nis salt water:\nsweat, tears, or the sea.",
   ];
 
   var overlay = document.createElement("div");
@@ -24,6 +29,7 @@
   document.documentElement.appendChild(overlay);
 
   var spans = [];
+  var charMap = [];
   var currentIndex = 0;
   var lastQuoteIdx = -1;
   var quote = "";
@@ -36,22 +42,30 @@
     lastQuoteIdx = next;
     quote = QUOTES[next];
     currentIndex = 0;
+    charMap = [];
 
     while (quoteContainer.firstChild) {
       quoteContainer.removeChild(quoteContainer.firstChild);
     }
+    for (var i = 0; i < quote.length; i++) {
+      var letter = quote[i];
 
-    var i, letter, span;
-    for (i = 0; i < quote.length; i++) {
-      letter = quote[i];
-      span = document.createElement("span");
+      if (letter === "\n") {
+        quoteContainer.appendChild(document.createElement("br"));
+        continue;
+      }
+
+      var span = document.createElement("span");
       span.className = "char";
       span.textContent = letter === " " ? "\u00A0" : letter;
       quoteContainer.appendChild(span);
+      charMap.push(letter);
     }
 
-    spans = quoteContainer.getElementsByClassName("char");
-    spans[0].classList.add("caret");
+    spans = Array.prototype.slice.call(
+      quoteContainer.querySelectorAll(".char"),
+    );
+    if (spans.length) spans[0].classList.add("caret");
 
     quoteContainer.classList.remove("loading");
     void quoteContainer.offsetWidth;
@@ -94,9 +108,9 @@
 
     if (e.key.length !== 1) return;
     if (currentIndex >= spans.length) return;
-
     spans[currentIndex].classList.remove("caret");
-    if (e.key === quote[currentIndex]) {
+
+    if (e.key === charMap[currentIndex]) {
       spans[currentIndex].classList.add("correct");
     } else {
       spans[currentIndex].classList.add("incorrect");
