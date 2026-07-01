@@ -1,7 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600&display=swap");
 
-/* ── Grounding overlay ──────────────────────────────────────── */
-
 #grounding-overlay {
     position: fixed !important;
     inset: 0 !important;
@@ -9,23 +7,19 @@
     margin: 0 !important;
     padding: 24px !important;
     border: 0 !important;
-
     display: flex !important;
-    flex-direction: row !important;
+    flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-
     z-index: 2147483647 !important;
     background-color: #323437 !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
-
     overflow: hidden !important;
     pointer-events: all !important;
     transform: none !important;
     direction: ltr !important;
     text-align: center !important;
-
     transition:
         opacity 0.5s ease,
         backdrop-filter 0.5s ease !important;
@@ -64,7 +58,6 @@ body:has(#grounding-overlay):not(:has(.fade-out)) {
     margin: 0 auto !important;
     padding: 0 !important;
     transform: none !important;
-
     text-align: center !important;
     direction: ltr !important;
     white-space: normal !important;
@@ -73,7 +66,6 @@ body:has(#grounding-overlay):not(:has(.fade-out)) {
     text-transform: none !important;
     text-indent: 0 !important;
     vertical-align: baseline !important;
-
     font-family: "Roboto Mono", monospace !important;
     font-size: 34px !important;
     font-weight: 600 !important;
@@ -84,6 +76,40 @@ body:has(#grounding-overlay):not(:has(.fade-out)) {
 
 #grounding-quote.loading {
     animation: quote-fade-in 0.4s ease forwards !important;
+}
+
+#grounding-stats {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 600px !important;
+    margin: 35px auto 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    font-family: "Roboto Mono", monospace !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: #4c4f52 !important;
+    user-select: none !important;
+    direction: ltr !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+}
+
+#grounding-stats span {
+    display: inline-flex !important;
+    align-items: center !important;
+    font: inherit !important;
+    color: inherit !important;
+}
+
+#grounding-stats span:not(:last-child)::after {
+    content: "|" !important;
+    margin-left: 14px !important;
+    margin-right: 14px !important;
+    color: #3a3d40 !important;
+    font-weight: 400 !important;
 }
 
 @keyframes grounding-blink {
@@ -106,7 +132,6 @@ body:has(#grounding-overlay):not(:has(.fade-out)) {
     transform: none !important;
     vertical-align: baseline !important;
     letter-spacing: normal !important;
-
     font: inherit !important;
     color: #646669 !important;
 }
@@ -114,7 +139,6 @@ body:has(#grounding-overlay):not(:has(.fade-out)) {
 #grounding-quote .char.correct {
     color: #d1d0c5 !important;
 }
-
 #grounding-quote .char.incorrect {
     color: #ca4754 !important;
 }

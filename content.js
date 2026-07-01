@@ -25,7 +25,17 @@
   var quoteContainer = document.createElement("div");
   quoteContainer.id = "grounding-quote";
 
+  var statsEl = document.createElement("div");
+  statsEl.id = "grounding-stats";
+  var statWpm = document.createElement("span");
+  var statProgress = document.createElement("span");
+  var statAccuracy = document.createElement("span");
+  statsEl.appendChild(statWpm);
+  statsEl.appendChild(statProgress);
+  statsEl.appendChild(statAccuracy);
+
   overlay.appendChild(quoteContainer);
+  overlay.appendChild(statsEl);
   document.documentElement.appendChild(overlay);
 
   var spans = [];
@@ -33,6 +43,19 @@
   var currentIndex = 0;
   var lastQuoteIdx = -1;
   var quote = "";
+  var totalInputs = 0;
+  var correctInputs = 0;
+  var startTime = null;
+
+  function updateStats() {
+    var minutes = startTime ? (Date.now() - startTime) / 60000 : 0;
+    var wpm = minutes > 0 ? Math.round(correctInputs / 5 / minutes) : 0;
+    var pct =
+      totalInputs === 0 ? 100 : Math.round((correctInputs / totalInputs) * 100);
+    statWpm.textContent = "wpm: " + wpm;
+    statProgress.textContent = currentIndex + " / " + spans.length;
+    statAccuracy.textContent = pct + "%";
+  }
 
   function loadQuote() {
     var next = lastQuoteIdx;
@@ -43,6 +66,9 @@
     quote = QUOTES[next];
     currentIndex = 0;
     charMap = [];
+    totalInputs = 0;
+    correctInputs = 0;
+    startTime = null;
 
     while (quoteContainer.firstChild) {
       quoteContainer.removeChild(quoteContainer.firstChild);
@@ -67,12 +93,15 @@
     );
     if (spans.length) spans[0].classList.add("caret");
 
+    updateStats();
+
     quoteContainer.classList.remove("loading");
     void quoteContainer.offsetWidth;
     quoteContainer.classList.add("loading");
   }
 
   function unlock() {
+    startTime = null;
     window.removeEventListener("keydown", onKeyDown);
     overlay.classList.add("fade-out");
     setTimeout(function () {
@@ -88,9 +117,14 @@
     return true;
   }
 
+  // onkeydown (using comments cuz its getting messy)
+
   function onKeyDown(e) {
     if (e.ctrlKey || e.metaKey) return;
     if (e.key === "Escape") {
+      totalInputs = 0;
+      correctInputs = 0;
+      startTime = null;
       loadQuote();
       return;
     }
@@ -103,6 +137,7 @@
       currentIndex--;
       spans[currentIndex].classList.remove("correct", "incorrect");
       spans[currentIndex].classList.add("caret");
+      updateStats();
       return;
     }
 
@@ -110,8 +145,11 @@
     if (currentIndex >= spans.length) return;
     spans[currentIndex].classList.remove("caret");
 
+    totalInputs++;
     if (e.key === charMap[currentIndex]) {
+      if (startTime === null) startTime = Date.now();
       spans[currentIndex].classList.add("correct");
+      correctInputs++;
     } else {
       spans[currentIndex].classList.add("incorrect");
     }
@@ -120,6 +158,8 @@
     if (currentIndex < spans.length) {
       spans[currentIndex].classList.add("caret");
     }
+
+    updateStats();
 
     if (isComplete()) {
       unlock();
