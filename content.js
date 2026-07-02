@@ -46,19 +46,6 @@
   warningEl.id = "grounding-warning";
   warningEl.textContent = "Breathe. You are moving too fast. Slow down.";
 
-  var breatherEl = document.createElement("div");
-  breatherEl.id = "grounding-breather";
-  var breatherCircle = document.createElement("div");
-  breatherCircle.className = "breather-circle";
-  var breatherLabel = document.createElement("div");
-  breatherLabel.className = "breather-label";
-  breatherEl.appendChild(breatherCircle);
-  breatherEl.appendChild(breatherLabel);
-
-  quoteContainer.classList.add("hidden");
-  statsEl.classList.add("hidden");
-
-  overlay.appendChild(breatherEl);
   overlay.appendChild(quoteContainer);
   overlay.appendChild(statsEl);
   overlay.appendChild(warningEl);
@@ -74,78 +61,9 @@
   var isPenalized = false;
   var penaltyTimeoutId = null;
   var currentWordDiv = null;
-  var isBreathingPhase = true;
-  var breathingTimeoutIds = [];
 
   function updateProgress() {
     statProgress.textContent = currentIndex + " / " + spans.length;
-  }
-
-  function clearBreathingTimers() {
-    for (var i = 0; i < breathingTimeoutIds.length; i++) {
-      clearTimeout(breathingTimeoutIds[i]);
-    }
-    breathingTimeoutIds = [];
-  }
-
-  function runBreathingCycle() {
-    clearBreathingTimers();
-
-    breatherEl.classList.remove("fade-out");
-    breatherCircle.classList.remove("breathing");
-    void breatherCircle.offsetWidth;
-    breatherCircle.classList.add("breathing");
-    breatherLabel.textContent = "Inhale slowly...";
-
-    breathingTimeoutIds.push(
-      setTimeout(function () {
-        breatherLabel.textContent = "Hold...";
-      }, 4000),
-    );
-    breathingTimeoutIds.push(
-      setTimeout(function () {
-        breatherLabel.textContent = "Exhale fully...";
-      }, 8000),
-    );
-    breathingTimeoutIds.push(
-      setTimeout(function () {
-        breatherLabel.textContent = "Hold...";
-      }, 12000),
-    );
-    breathingTimeoutIds.push(setTimeout(finishBreathingPhase, 16000));
-  }
-
-  function finishBreathingPhase() {
-    breathingTimeoutIds = [];
-    isBreathingPhase = false;
-    breatherEl.classList.add("fade-out");
-    quoteContainer.classList.remove("hidden");
-    statsEl.classList.remove("hidden");
-    loadQuote();
-  }
-
-  function startBreathingPhase() {
-    if (penaltyTimeoutId) {
-      clearTimeout(penaltyTimeoutId);
-      penaltyTimeoutId = null;
-    }
-    isPenalized = false;
-    rushStreak = 0;
-    lastKeyTime = null;
-    currentWordDiv = null;
-    currentIndex = 0;
-    charMap = [];
-    spans = [];
-
-    quoteContainer.classList.remove("rushing");
-    quoteContainer.classList.remove("loading");
-    quoteContainer.classList.add("hidden");
-    quoteContainer.scrollTop = 0;
-    statsEl.classList.add("hidden");
-    warningEl.classList.remove("visible");
-
-    isBreathingPhase = true;
-    runBreathingCycle();
   }
 
   function sanitizeText(text) {
@@ -298,14 +216,12 @@
 
   function onKeyDown(e) {
     if (e.ctrlKey || e.metaKey) return;
+    if (isPenalized) return;
 
     if (e.key === "Escape") {
-      startBreathingPhase();
+      loadQuote();
       return;
     }
-
-    if (isBreathingPhase) return;
-    if (isPenalized) return;
 
     if (e.key === "Backspace") {
       if (currentIndex === 0) return;
@@ -357,5 +273,5 @@
   }
 
   window.addEventListener("keydown", onKeyDown);
-  startBreathingPhase();
+  loadQuote();
 })();
