@@ -12,7 +12,7 @@
     align-items: center !important;
     justify-content: center !important;
     z-index: 2147483647 !important;
-    background-color: #323437 !important;
+    background-color: #1f2326 !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
     overflow: hidden !important;
@@ -55,12 +55,16 @@ body:has(#grounding-overlay):not(:has(.fade-out)) {
     float: none !important;
     width: 100% !important;
     max-width: 600px !important;
+    max-height: 50vh !important;
     margin: 0 auto !important;
     padding: 0 !important;
     transform: none !important;
     text-align: center !important;
     direction: ltr !important;
-    white-space: normal !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
     letter-spacing: normal !important;
     word-spacing: normal !important;
     text-transform: none !important;
@@ -72,10 +76,93 @@ body:has(#grounding-overlay):not(:has(.fade-out)) {
     line-height: 1.7 !important;
     color: #646669 !important;
     user-select: none !important;
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
+    scroll-behavior: smooth !important;
+    transition: filter 0.8s ease-in-out !important;
 }
 
 #grounding-quote.loading {
     animation: quote-fade-in 0.4s ease forwards !important;
+}
+
+#grounding-overlay .hidden {
+    display: none !important;
+}
+
+@keyframes box-breathe {
+    0% {
+        transform: scale(1) !important;
+    }
+    25% {
+        transform: scale(1.5) !important;
+    }
+    50% {
+        transform: scale(1.5) !important;
+    }
+    75% {
+        transform: scale(1) !important;
+    }
+    100% {
+        transform: scale(1) !important;
+    }
+}
+
+#grounding-breather {
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 28px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    opacity: 1 !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    transition: opacity 0.6s ease !important;
+}
+
+#grounding-breather.fade-out {
+    opacity: 0 !important;
+}
+
+#grounding-breather .breather-circle {
+    box-sizing: border-box !important;
+    width: 96px !important;
+    height: 96px !important;
+    border-radius: 50% !important;
+    border: 2px solid #4c5450 !important;
+    background: rgba(76, 84, 80, 0.15) !important;
+    transform: scale(1) !important;
+}
+
+#grounding-breather .breather-circle.breathing {
+    animation: box-breathe 16s ease-in-out forwards !important;
+}
+
+#grounding-breather .breather-label {
+    box-sizing: border-box !important;
+    font-family: "Roboto Mono", monospace !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.04em !important;
+    color: #6b7570 !important;
+    user-select: none !important;
+}
+
+#grounding-quote.rushing {
+    filter: blur(8px) !important;
+}
+
+#grounding-quote .word {
+    box-sizing: border-box !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+    vertical-align: baseline !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 #grounding-stats {
@@ -88,9 +175,10 @@ body:has(#grounding-overlay):not(:has(.fade-out)) {
     padding: 0 !important;
     box-sizing: border-box !important;
     font-family: "Roboto Mono", monospace !important;
-    font-size: 14px !important;
+    font-size: 13px !important;
     font-weight: 400 !important;
-    color: #4c4f52 !important;
+    color: #4c5450 !important;
+    opacity: 0.6 !important;
     user-select: none !important;
     direction: ltr !important;
     letter-spacing: normal !important;
@@ -102,14 +190,6 @@ body:has(#grounding-overlay):not(:has(.fade-out)) {
     align-items: center !important;
     font: inherit !important;
     color: inherit !important;
-}
-
-#grounding-stats span:not(:last-child)::after {
-    content: "|" !important;
-    margin-left: 14px !important;
-    margin-right: 14px !important;
-    color: #3a3d40 !important;
-    font-weight: 400 !important;
 }
 
 @keyframes grounding-blink {
@@ -141,6 +221,34 @@ body:has(#grounding-overlay):not(:has(.fade-out)) {
 }
 #grounding-quote .char.incorrect {
     color: #ca4754 !important;
+}
+
+#grounding-quote.rushing .char {
+    color: #8b1e2f !important;
+    transition: color 0.8s ease-in-out !important;
+}
+
+#grounding-warning {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 600px !important;
+    margin: 14px auto 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+    font-family: "Roboto Mono", monospace !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    color: #c96b74 !important;
+    opacity: 0 !important;
+    transform: translateY(8px) !important;
+    transition: opacity 0.4s ease, transform 0.4s ease !important;
+    pointer-events: none !important;
+    user-select: none !important;
+}
+
+#grounding-warning.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
 }
 
 #grounding-quote .char.caret::before {
