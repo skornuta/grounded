@@ -3,7 +3,6 @@
   "name": "Grounding",
   "version": "0.6.0",
   "description": "A quick and simple extension to try to gate distracting sites behind a calm, distraction-free typing challenge.",
-  "permissions": ["storage"],
   "content_scripts": [
     {
       "matches": [
