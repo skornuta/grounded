@@ -1,206 +1,39 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600&display=swap");
+/* ==========================================================================
+   Grounded v0.6.0 — page-side shield.
 
-#grounding-overlay {
-    position: fixed !important;
-    inset: 0 !important;
-    box-sizing: border-box !important;
-    margin: 0 !important;
-    padding: 24px !important;
-    border: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 2147483647 !important;
-    background-color: #1f2326 !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    overflow: hidden !important;
-    pointer-events: all !important;
-    transform: none !important;
-    direction: ltr !important;
-    text-align: center !important;
-    transition:
-        opacity 0.5s ease,
-        backdrop-filter 0.5s ease !important;
+   Manifest-injected CSS (therefore exempt from the host page's CSP). It
+   has exactly two jobs:
+
+   1. Harden the EMPTY shadow-host element, which lives in the page's DOM
+      and is the only part of the extension the host site's stylesheets
+      can still reach. Everything visual lives inside the closed shadow
+      root (see styles.js), where page CSS cannot follow.
+
+   2. Provide a class-driven scroll lock. This replaces the old
+      html:has(#overlay):not(:has(.fade-out)) selector, which silently
+      broke on any site shipping its own .fade-out elements.
+   ========================================================================== */
+
+#grounded-host {
+  all: initial !important;
+  display: block !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  z-index: 2147483647 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  pointer-events: auto !important;
 }
 
-#grounding-overlay.fade-out {
-    opacity: 0 !important;
-    backdrop-filter: blur(0px) !important;
-    -webkit-backdrop-filter: blur(0px) !important;
-    pointer-events: none !important;
-}
-
-html:has(#grounding-overlay):not(:has(.fade-out)),
-body:has(#grounding-overlay):not(:has(.fade-out)) {
-    overflow: hidden !important;
-}
-
-#grounding-overlay .hidden {
-    display: none !important;
-}
-
-@keyframes breathe-3phase {
-    0% {
-        transform: scale(1) !important;
-    }
-    33.333% {
-        transform: scale(1.6) !important;
-    }
-    66.666% {
-        transform: scale(1.6) !important;
-    }
-    100% {
-        transform: scale(1) !important;
-    }
-}
-
-#grounding-breather {
-    box-sizing: border-box !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 28px !important;
-    width: 100% !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    opacity: 1 !important;
-    pointer-events: none !important;
-    user-select: none !important;
-    transition: opacity 0.6s ease !important;
-}
-
-#grounding-breather.fade-out {
-    opacity: 0 !important;
-}
-
-#grounding-breather .breather-circle {
-    box-sizing: border-box !important;
-    width: 96px !important;
-    height: 96px !important;
-    border-radius: 50% !important;
-    border: 2px solid #4c5450 !important;
-    background: rgba(76, 84, 80, 0.15) !important;
-    transform: scale(1) !important;
-}
-
-#grounding-breather .breather-circle.breathing {
-    animation: breathe-3phase 12s ease-in-out forwards !important;
-}
-
-#grounding-breather .breather-label {
-    box-sizing: border-box !important;
-    font-family: "Roboto Mono", monospace !important;
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    letter-spacing: 0.04em !important;
-    color: #6b7570 !important;
-    user-select: none !important;
-}
-
-@keyframes heading-fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-#grounding-heading {
-    box-sizing: border-box !important;
-    display: block !important;
-    width: 100% !important;
-    max-width: 560px !important;
-    margin: 0 auto 32px !important;
-    padding: 0 !important;
-    transform: none !important;
-    text-align: center !important;
-    direction: ltr !important;
-    font-family: "Roboto Mono", monospace !important;
-    font-size: 18px !important;
-    font-weight: 400 !important;
-    line-height: 1.6 !important;
-    letter-spacing: 0.01em !important;
-    color: #6b7570 !important;
-    user-select: none !important;
-    animation: heading-fade-in 0.8s ease forwards !important;
-}
-
-#grounding-canvas {
-    box-sizing: border-box !important;
-    display: block !important;
-    position: relative !important;
-    width: 100% !important;
-    max-width: 620px !important;
-    max-height: 45vh !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    transform: none !important;
-    text-align: center !important;
-    direction: ltr !important;
-    white-space: normal !important;
-    overflow-wrap: break-word !important;
-    word-wrap: break-word !important;
-    word-break: break-word !important;
-    font-family: "Roboto Mono", monospace !important;
-    font-size: 28px !important;
-    font-weight: 400 !important;
-    line-height: 1.7 !important;
-    color: #d1d0c5 !important;
-    user-select: none !important;
-    overflow: hidden !important;
-}
-
-#grounding-canvas .canvas-char {
-    box-sizing: border-box !important;
-    display: inline !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    font: inherit !important;
-    color: inherit !important;
-    opacity: 1 !important;
-    filter: blur(0px) !important;
-    transform: translateY(0) !important;
-    transition:
-        opacity 2s ease-in-out,
-        filter 2s ease-in-out,
-        transform 2s ease-in-out !important;
-}
-
-#grounding-canvas .canvas-char.dissolve {
-    opacity: 0 !important;
-    filter: blur(6px) !important;
-    transform: translateY(-15px) !important;
-}
-
-#grounding-stats {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    width: 100% !important;
-    max-width: 600px !important;
-    margin: 35px auto 0 !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-    font-family: "Roboto Mono", monospace !important;
-    font-size: 13px !important;
-    font-weight: 400 !important;
-    color: #4c5450 !important;
-    opacity: 0.6 !important;
-    user-select: none !important;
-    direction: ltr !important;
-    letter-spacing: normal !important;
-    text-transform: none !important;
-}
-
-#grounding-stats span {
-    display: inline-flex !important;
-    align-items: center !important;
-    font: inherit !important;
-    color: inherit !important;
+html.grounded-scroll-lock,
+html.grounded-scroll-lock body {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
 }

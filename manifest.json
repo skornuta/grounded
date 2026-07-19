@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Grounding",
   "version": "0.6.0",
-  "description": "A quick and simple extension to try to gate distracting sites behind a calm, distraction-free typing challenge.",
+  "description": "Gates distracting sites behind a calm, free-form brain dump. Type what is on your mind, watch it dissolve, and unlock after 50 characters.",
   "content_scripts": [
     {
       "matches": [
@@ -14,9 +14,19 @@
         "*://*.snapchat.com/*",
         "*://*.facebook.com/*"
       ],
-      "js": ["content.js"],
+      "js": ["styles.js", "content.js"],
       "css": ["content.css"],
       "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "fonts/roboto-mono-latin.woff2",
+        "fonts/roboto-mono-latin-ext.woff2",
+        "fonts/roboto-mono-cyrillic.woff2"
+      ],
+      "matches": ["<all_urls>"]
     }
   ]
 }
